@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+    <!-- Meta, title, CSS, etc. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content>
+    <meta name="author" content>
+
+    <title>Contact | Pet Tattoos</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/pet_tattoos.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="ptats-body" data-spy="scroll" data-target=".ptats-sidebar">
+    <!-- Navbar -->
+    <div class="navbar navbar-fixed-top ptats-navbar">
+        <div class="container">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Pet Tattoos</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active"><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="masthead jumbotron no-rounded-corners">
+        <div class="container">
+            <h1>Email us.</h1>
+            <p class="lead">We'd love to hear from you.</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="alert alert-success" style="display: none;">
+            <b>Success!</b> Email sent sucessfully!
+        </div>
+        <div class="alert alert-error" style="display: none;">
+        </div>
+        <form name="email_form" id="email_form" class="email" action="javascript:return false;">
+            <fieldset>
+                <legend>Contact Us</legend>
+
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" size="25" placeholder="John Doe">
+
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" size="25" placeholder="john@doe.com">
+
+                <label for="subject">Subject</label>
+                <input type="text" name="subject" id="subject" size="25" placeholder="Subject">
+
+                <label for="body">Body</label>
+                <textarea name="body" id="body" rows="10" cols="45" placeholder="Your message here."></textarea>
+
+                <button type="submit" name="submit" id="submit" class="btn">Send</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- Main page footer. Includes copyright, and more. -->
+    <footer class="ptats-footer">
+        <ul class="footer-links">
+            <li>&copy; Pet Tattoos 2013</li>
+        </ul>
+    </footer>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+    <script src="js/bootstrap-affix.js"></script>
+    <script src="js/validate.js"></script>
+
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+    <script type="text/javascript">
+        new FormValidator('email_form', [{
+            name:'name',
+            rules: 'required'
+        }, {
+            name: 'email',
+            rules: 'required|valid_email'
+        }, {
+            name: 'subject',
+            rules: 'required'
+        }, {
+            name: 'body',
+            rules: 'required'
+        }], function(errors, event) {
+                var errorBox = $('.alert-error'),
+                    successBox = $('.alert-success');
+
+                if(errors.length > 0) {
+                    errorBox.empty();
+
+                    for(var i = 0, errorLength = errors.length; i < errorLength; i++) {
+                        errorBox.append(errors[i].message + '<br />');
+                    }
+
+                    successBox.css({display: 'none'});
+                    errorBox.fadeIn(200);
+                } else {
+                    var name = $('#name').val(),
+                        email = $('#email').val(),
+                        subject = $('#subject').val(),
+                        body = $('#body').val(),
+                        data = 'name=' + name + '&email=' + email + '&subject=' + subject +
+                            '&body=' + body;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "php/contact_email.php",
+                        data: data,
+                        success: function() {
+                            errorBox.css({display: 'none'});
+                            successBox.fadeIn(200);
+                        }
+                    });
+                }
+        });
+    </script>
+</body>
+</html>
